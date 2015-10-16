@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">PlayCamera</string>
+    <string name="label_start">開始</string>
+    <string name="label_stop">停止</string>
+</resources>
