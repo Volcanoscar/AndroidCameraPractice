@@ -1,139 +1,100 @@
 package tw.ccmos.mobi.playcamera;
 
+import android.content.Context;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
-import android.media.CamcorderProfile;
-import android.media.MediaRecorder;
-import android.os.Environment;
-import android.os.Handler;
+import android.os.PowerManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 
-import java.io.IOException;
-import java.util.List;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-public class MainActivity extends AppCompatActivity implements TextureView.SurfaceTextureListener, View.OnClickListener {
-
-    CropTextureView preview;
-    Camera mCamera;
-    Camera.Size mPreviewSize;
-    boolean mRecording;
-    MediaRecorder mMediaRecorder;
-    Surface mSurface;
+    private final static String CLASS_LABEL = "MainActivity";
+    private PowerManager.WakeLock mWakeLock;
+    private boolean recording;
+    private CameraView cameraView;
+    private Camera cameraDevice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        preview = (CropTextureView) findViewById(R.id.preview);
-        preview.setSurfaceTextureListener(this);
-        preview.setFitMode(FitMode.WIDTH);
-        preview.setAspectRatio(16, 9);
+        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        mWakeLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, CLASS_LABEL);
+        mWakeLock.acquire();
 
-        findViewById(R.id.startButton).setOnClickListener(this);
-        findViewById(R.id.stopButton).setOnClickListener(this);
+        initLayout();
     }
 
     @Override
-    public void onClick(View v) {
-        int id = v.getId();
+    protected void onResume() {
+        super.onResume();
 
-        switch (id) {
-            case R.id.startButton:
-                startRecording();
-                break;
-            case R.id.stopButton:
-                stopRecording();
-                break;
+        if (mWakeLock == null) {
+            PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+            mWakeLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, CLASS_LABEL);
+            mWakeLock.acquire();
         }
     }
 
     @Override
-    public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-        mSurface = new Surface(surface);
+    protected void onDestroy() {
+        super.onDestroy();
 
-        if (mCamera == null)
-            mCamera = Camera.open();
+        recording = false;
 
-        try {
-            mCamera.setDisplayOrientation(90);
-            mCamera.setPreviewTexture(surface);
-
-            Camera.Parameters parameters = mCamera.getParameters();
-
-            List<Camera.Size> supportedPreviewSizes = parameters.getSupportedPreviewSizes();
-            mPreviewSize = supportedPreviewSizes.get(0);
-            parameters.setPreviewSize(mPreviewSize.width, mPreviewSize.height);
-            preview.setPreviewSize(mPreviewSize.height, mPreviewSize.width);
-            preview.requestLayout();
-
-            List<String> supportedFocusModes = parameters.getSupportedFocusModes();
-            if (supportedFocusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO))
-                parameters.setFlashMode(Camera.Parameters.FOCUS_MODE_AUTO);
-            else if (supportedFocusModes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE))
-                parameters.setFlashMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
-            else if (supportedFocusModes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO))
-                parameters.setFlashMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
-
-            mCamera.setParameters(parameters);
-
-            startPreview();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (cameraView != null) {
+            cameraView.stopPreview();
         }
-    }
 
-    @Override
-    public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+        if (cameraDevice != null) {
+            cameraDevice.stopPreview();
+            cameraDevice.release();
+            cameraDevice = null;
+        }
 
-    }
-
-    @Override
-    public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
-        return false;
-    }
-
-    @Override
-    public void onSurfaceTextureUpdated(SurfaceTexture surface) {
-
+        if (mWakeLock != null) {
+            mWakeLock.release();
+            mWakeLock = null;
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
 
-        releaseCamera();
+        if (mWakeLock != null) {
+            mWakeLock.release();
+            mWakeLock = null;
+        }
     }
 
-    private void releaseCamera() {
-        mCamera.stopPreview();
-        mCamera.release();
-        mCamera = null;
-    }
-
-    private void startPreview() {
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                mCamera.startPreview();
-            }
-        });
-    }
-
-    private void stopRecording() {
+    @Override
+    public void onClick(View v) {
 
     }
 
-    private void startRecording() {
+    private void initLayout() {
+        cameraView = (CameraView) findViewById(R.id.cameraView);
 
+        findViewById(R.id.startButton).setOnClickListener(this);
+        findViewById(R.id.stopButton).setOnClickListener(this);
+
+        cameraDevice = Camera.open();
+        cameraView.setCamera(cameraDevice);
+        cameraView.setFitMode(FitMode.WIDTH);
+        cameraView.setAspectRatio(4, 3);
+
+        cameraDevice.setDisplayOrientation(90);
+        Camera.Size size = cameraDevice.getParameters().getSupportedPreviewSizes().get(0);
+        cameraView.setPreviewSize(size.height, size.width);
+        cameraView.requestLayout();
     }
 
-    public String getVideoPath() {
-        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).getAbsolutePath() + "/tmp.mp4";
-        return path;
+    private void initRecorder() {
+        
     }
 }

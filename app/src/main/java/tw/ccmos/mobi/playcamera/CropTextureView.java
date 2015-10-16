@@ -46,17 +46,6 @@ public class CropTextureView extends TextureView {
 
         mPreviewWidth = width;
         mPreviewHeight = height;
-
-//        float scaleX = 1.0f;
-//        float scaleY = 1.0f;
-//
-//        float realHeight = mViewWidth / width * height;
-//        scaleY = realHeight / mViewHeight;
-//
-//        Matrix matrix = new Matrix();
-//        matrix.setScale(scaleX, scaleY, 0, 0);
-//
-//        setTransform(matrix);
     }
 
     public void setFitMode(FitMode mFitMode) {

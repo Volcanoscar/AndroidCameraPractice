@@ -71,8 +71,8 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/dependency-cache" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/dex" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/dex-cache" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/org.jdeferred/jdeferred-android-aar/1.2.4/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jacoco" />
@@ -91,11 +91,65 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 23 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="jdeferred-android-aar-1.2.4" level="project" />
-    <orderEntry type="library" exported="" name="appcompat-v7-23.0.1" level="project" />
+    <orderEntry type="library" exported="" name="ffmpeg-windows-x86_64" level="project" />
+    <orderEntry type="library" exported="" name="artoolkitplus-linux-x86_64" level="project" />
+    <orderEntry type="library" exported="" name="libfreenect-linux-x86" level="project" />
+    <orderEntry type="library" exported="" name="opencv-windows-x86_64" level="project" />
+    <orderEntry type="library" exported="" name="artoolkitplus-macosx-x86_64" level="project" />
+    <orderEntry type="library" exported="" name="videoinput" level="project" />
+    <orderEntry type="library" exported="" name="ffmpeg-linux-x86_64" level="project" />
     <orderEntry type="library" exported="" name="jdeferred-core-1.2.4" level="project" />
+    <orderEntry type="library" exported="" name="libfreenect" level="project" />
+    <orderEntry type="library" exported="" name="ffmpeg-android-x86" level="project" />
+    <orderEntry type="library" exported="" name="ffmpeg-android-arm" level="project" />
+    <orderEntry type="library" exported="" name="flycapture-windows-x86_64" level="project" />
+    <orderEntry type="library" exported="" name="libfreenect-macosx-x86_64" level="project" />
+    <orderEntry type="library" exported="" name="libdc1394" level="project" />
+    <orderEntry type="library" exported="" name="javacpp" level="project" />
+    <orderEntry type="library" exported="" name="flycapture-linux-x86" level="project" />
+    <orderEntry type="library" exported="" name="opencv-linux-x86" level="project" />
+    <orderEntry type="library" exported="" name="libdc1394-macosx-x86_64" level="project" />
+    <orderEntry type="library" exported="" name="libfreenect-linux-x86_64" level="project" />
+    <orderEntry type="library" exported="" name="ffmpeg-macosx-x86_64" level="project" />
+    <orderEntry type="library" exported="" name="artoolkitplus-windows-x86" level="project" />
+    <orderEntry type="library" exported="" name="hamcrest-core" level="project" />
+    <orderEntry type="library" exported="" name="opencv-linux-x86_64" level="project" />
+    <orderEntry type="library" exported="" name="ffmpeg-linux-x86" level="project" />
+    <orderEntry type="library" exported="" name="opencv-android-x86" level="project" />
+    <orderEntry type="library" exported="" name="flandmark-windows-x86" level="project" />
+    <orderEntry type="library" exported="" name="flandmark-android-arm" level="project" />
+    <orderEntry type="library" exported="" name="support-v4-23.1.0" level="project" />
+    <orderEntry type="library" exported="" name="flandmark" level="project" />
+    <orderEntry type="library" exported="" name="artoolkitplus-linux-x86" level="project" />
+    <orderEntry type="library" exported="" name="flandmark-linux-x86" level="project" />
+    <orderEntry type="library" exported="" name="javacv" level="project" />
+    <orderEntry type="library" exported="" name="artoolkitplus-android-arm" level="project" />
+    <orderEntry type="library" exported="" name="libdc1394-linux-x86" level="project" />
+    <orderEntry type="library" exported="" name="flandmark-macosx-x86_64" level="project" />
+    <orderEntry type="library" exported="" name="opencv" level="project" />
+    <orderEntry type="library" exported="" name="libfreenect-windows-x86_64" level="project" />
+    <orderEntry type="library" exported="" name="opencv-macosx-x86_64" level="project" />
+    <orderEntry type="library" exported="" name="flycapture" level="project" />
+    <orderEntry type="library" exported="" name="flandmark-windows-x86_64" level="project" />
+    <orderEntry type="library" exported="" name="appcompat-v7-23.1.0" level="project" />
+    <orderEntry type="library" exported="" name="artoolkitplus-android-x86" level="project" />
+    <orderEntry type="library" exported="" name="flycapture-windows-x86" level="project" />
+    <orderEntry type="library" exported="" name="videoinput-windows-x86" level="project" />
+    <orderEntry type="library" exported="" name="artoolkitplus-windows-x86_64" level="project" />
+    <orderEntry type="library" exported="" name="flycapture-linux-x86_64" level="project" />
+    <orderEntry type="library" exported="" name="support-annotations-23.1.0" level="project" />
+    <orderEntry type="library" exported="" name="ffmpeg" level="project" />
+    <orderEntry type="library" exported="" name="artoolkitplus" level="project" />
+    <orderEntry type="library" exported="" name="ffmpeg-windows-x86" level="project" />
+    <orderEntry type="library" exported="" name="videoinput-windows-x86_64" level="project" />
+    <orderEntry type="library" exported="" name="junit" level="project" />
+    <orderEntry type="library" exported="" name="opencv-windows-x86" level="project" />
+    <orderEntry type="library" exported="" name="flandmark-android-x86" level="project" />
+    <orderEntry type="library" exported="" name="jdeferred-android-aar-1.2.4" level="project" />
+    <orderEntry type="library" exported="" name="flandmark-linux-x86_64" level="project" />
     <orderEntry type="library" exported="" name="slf4j-api-1.7.2" level="project" />
-    <orderEntry type="library" exported="" name="support-v4-23.0.1" level="project" />
-    <orderEntry type="library" exported="" name="support-annotations-23.0.1" level="project" />
+    <orderEntry type="library" exported="" name="libfreenect-windows-x86" level="project" />
+    <orderEntry type="library" exported="" name="opencv-android-arm" level="project" />
+    <orderEntry type="library" exported="" name="libdc1394-linux-x86_64" level="project" />
   </component>
 </module>
