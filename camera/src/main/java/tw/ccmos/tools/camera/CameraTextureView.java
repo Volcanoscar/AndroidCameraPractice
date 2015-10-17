@@ -32,6 +32,8 @@ public class CameraTextureView extends CropTextureView implements TextureView.Su
     boolean isRecording;
     String mVideoPath;
     Surface mSurface;
+    int mPreviewHeight;
+    int mPreviewWidth;
 
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
@@ -82,6 +84,14 @@ public class CameraTextureView extends CropTextureView implements TextureView.Su
         super(context, attrs, defStyleAttr);
 
         setSurfaceTextureListener(this);
+    }
+
+    public int getPreviewWidth() {
+        return mPreviewWidth;
+    }
+
+    public int getPreviewHeight() {
+        return mPreviewHeight;
     }
 
     /**
@@ -180,6 +190,8 @@ public class CameraTextureView extends CropTextureView implements TextureView.Su
             });
 
             mPreviewSize = supportedPreviewSizes.get(0);
+            mPreviewHeight = mPreviewSize.height;
+            mPreviewWidth = mPreviewSize.width;
         }
 
         List<String> supportedFocusModes = parameters.getSupportedFocusModes();
@@ -205,14 +217,20 @@ public class CameraTextureView extends CropTextureView implements TextureView.Su
         if (orientation == CameraOrientation.PORTRAIT && mPreviewSize.width > mPreviewSize.height) {
             mCamera.setDisplayOrientation(90);
 
-            setPreviewSize(mPreviewSize.height, mPreviewSize.width);
+            mPreviewHeight = mPreviewSize.width;
+            mPreviewWidth = mPreviewSize.height;
+
+            setPreviewSize(mPreviewWidth, mPreviewHeight);
         }
 
 
         if (orientation == CameraOrientation.LANDSCAPE && mPreviewSize.width < mPreviewSize.height) {
             mCamera.setDisplayOrientation(270);
 
-            setPreviewSize(mPreviewSize.height, mPreviewSize.width);
+            mPreviewHeight = mPreviewSize.width;
+            mPreviewWidth = mPreviewSize.height;
+
+            setPreviewSize(mPreviewWidth, mPreviewHeight);
         }
 
         requestLayout();

@@ -9,15 +9,15 @@ import android.view.View;
 
 import tw.ccmos.tools.camera.FitMode;
 import tw.ccmos.tools.camera.CameraTextureView;
+import tw.ccmos.tools.camera.PlayerTextureView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     CameraTextureView preview;
+    PlayerTextureView player;
+
     Camera mCamera;
     Camera.Size mPreviewSize;
-    boolean mRecording;
-    MediaRecorder mMediaRecorder;
-    Surface mSurface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +28,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         preview.setFitMode(FitMode.WIDTH);
         preview.setAspectRatio(16, 9);
 
+        player = (PlayerTextureView) findViewById(R.id.player);
+        player.setFitMode(FitMode.WIDTH);
+        player.setAspectRatio(16, 9);
+
         findViewById(R.id.startButton).setOnClickListener(this);
         findViewById(R.id.stopButton).setOnClickListener(this);
     }
@@ -36,10 +40,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         int id = v.getId();
 
-        if (id == R.id.startButton)
+        if (id == R.id.startButton) {
             preview.startRecord();
-        else
+        } else {
             preview.stopRecord();
+
+            playVideo();
+        }
     }
 
     @Override
@@ -61,5 +68,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         preview.setCamera(mCamera, CameraTextureView.CameraOrientation.PORTRAIT);
         preview.startPreview();
+    }
+
+    private void playVideo() {
+        player.setPreviewSize(preview.getPreviewWidth(), preview.getPreviewHeight());
+        player.setVideoPathAndPlay(preview.getVideoPath());
     }
 }
