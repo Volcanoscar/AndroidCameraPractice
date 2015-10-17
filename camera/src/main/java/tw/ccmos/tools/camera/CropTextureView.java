@@ -1,9 +1,12 @@
-package tw.ccmos.mobi.playcamera;
+package tw.ccmos.tools.camera;
 
 import android.content.Context;
 import android.graphics.Matrix;
+import android.os.Environment;
 import android.util.AttributeSet;
 import android.view.TextureView;
+
+import java.util.Date;
 
 /**
  * Created by mosluce on 15/10/16.
@@ -16,6 +19,9 @@ public class CropTextureView extends TextureView {
     private int mPreviewWidth;
     private int mPreviewHeight;
     private FitMode mFitMode;
+
+    private String videoDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).getAbsolutePath();
+    private String videoPath = videoDir + "/" + String.format("%d.mp4", new Date().getTime());
 
     public CropTextureView(Context context) {
         super(context);
@@ -46,17 +52,6 @@ public class CropTextureView extends TextureView {
 
         mPreviewWidth = width;
         mPreviewHeight = height;
-
-//        float scaleX = 1.0f;
-//        float scaleY = 1.0f;
-//
-//        float realHeight = mViewWidth / width * height;
-//        scaleY = realHeight / mViewHeight;
-//
-//        Matrix matrix = new Matrix();
-//        matrix.setScale(scaleX, scaleY, 0, 0);
-//
-//        setTransform(matrix);
     }
 
     public void setFitMode(FitMode mFitMode) {
@@ -97,7 +92,7 @@ public class CropTextureView extends TextureView {
         if (mPreviewWidth != 0 && mPreviewHeight != 0) {
             float scale = ((float) mViewHeight) / mPreviewHeight * mPreviewWidth / mViewWidth;
             Matrix matrix = new Matrix();
-            matrix.setScale(scale, 1.0f, 0, 0);
+            matrix.setScale(scale, 1.0f, mViewWidth / 2, mViewHeight / 2);
             setTransform(matrix);
         }
 
@@ -111,7 +106,7 @@ public class CropTextureView extends TextureView {
         if (mPreviewWidth != 0 && mPreviewHeight != 0) {
             float scale = ((float) mViewWidth) / mPreviewWidth * mPreviewHeight / mViewHeight;
             Matrix matrix = new Matrix();
-            matrix.setScale(1.0f, scale, 0, 0);
+            matrix.setScale(1.0f, scale, mViewWidth / 2, mViewHeight / 2);
             setTransform(matrix);
         }
 
@@ -126,5 +121,7 @@ public class CropTextureView extends TextureView {
         return mViewHeight;
     }
 
-
+    public void setVideoPath(String videoPath) {
+        this.videoPath = videoPath;
+    }
 }

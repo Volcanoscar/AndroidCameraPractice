@@ -1,4 +1,4 @@
-package tw.ccmos.mobi.playcamera;
+package tw.ccmos.tools.camera;
 
 /**
  * Created by mosluce on 15/10/16.
