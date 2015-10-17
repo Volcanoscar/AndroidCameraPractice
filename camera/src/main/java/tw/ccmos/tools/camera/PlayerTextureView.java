@@ -12,10 +12,11 @@ import java.io.IOException;
 /**
  * Created by mosluce on 15/10/17.
  */
-public class PlayerTextureView extends CropTextureView implements TextureView.SurfaceTextureListener {
+public class PlayerTextureView extends CropTextureView implements TextureView.SurfaceTextureListener, MediaPlayer.OnCompletionListener {
     String mVideoPath;
     MediaPlayer mMediaPlayer;
     Surface mSurface;
+    boolean mRepeat = true;
 
     public PlayerTextureView(Context context) {
         super(context);
@@ -35,6 +36,11 @@ public class PlayerTextureView extends CropTextureView implements TextureView.Su
         setSurfaceTextureListener(this);
     }
 
+    /**
+     * 放入影片路徑
+     * @param videoPath
+     * @return
+     */
     public boolean setVideoPath(String videoPath) {
         try {
             if (mMediaPlayer != null) {
@@ -45,6 +51,7 @@ public class PlayerTextureView extends CropTextureView implements TextureView.Su
             mMediaPlayer.setSurface(mSurface);
             mMediaPlayer.setDataSource(videoPath);
             mMediaPlayer.prepare();
+            mMediaPlayer.setOnCompletionListener(this);
 
             requestLayout();
         } catch (IllegalStateException e) {
@@ -64,6 +71,10 @@ public class PlayerTextureView extends CropTextureView implements TextureView.Su
         mMediaPlayer = null;
     }
 
+    /**
+     * 放入影片路徑並播放
+     * @param videoPath
+     */
     public void setVideoPathAndPlay(String videoPath) {
         if (setVideoPath(videoPath)) {
             play();
@@ -75,9 +86,20 @@ public class PlayerTextureView extends CropTextureView implements TextureView.Su
             mMediaPlayer.start();
     }
 
+    /**
+     * 停止播放
+     */
     public void stop() {
         if (mMediaPlayer != null)
             mMediaPlayer.stop();
+    }
+
+    /**
+     * 設定重複播放(預設：true)
+     * @param repeat
+     */
+    public void setRepeat(boolean repeat) {
+        this.mRepeat = repeat;
     }
 
     @Override
@@ -98,5 +120,10 @@ public class PlayerTextureView extends CropTextureView implements TextureView.Su
     @Override
     public void onSurfaceTextureUpdated(SurfaceTexture surface) {
 
+    }
+
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+        if(mRepeat) mp.start();
     }
 }

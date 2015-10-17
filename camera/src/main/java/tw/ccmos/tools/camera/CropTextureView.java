@@ -32,6 +32,11 @@ public class CropTextureView extends TextureView {
         super(context, attrs, defStyleAttr);
     }
 
+    /**
+     * 設定長寬比例
+     * @param width
+     * @param height
+     */
     public void setAspectRatio(int width, int height) {
         if (width < 0 || height < 0) {
             throw new IllegalArgumentException("Size cannot be negative.");
@@ -42,6 +47,11 @@ public class CropTextureView extends TextureView {
 
     }
 
+    /**
+     * 設定將要渲染的圖像大小
+     * @param width
+     * @param height
+     */
     public void setPreviewSize(int width, int height) {
         if (width < 0 || height < 0) {
             throw new IllegalArgumentException("Size cannot be negative.");
@@ -51,6 +61,10 @@ public class CropTextureView extends TextureView {
         mPreviewHeight = height;
     }
 
+    /**
+     * 設定吻合的方式
+     * @param mFitMode
+     */
     public void setFitMode(FitMode mFitMode) {
         this.mFitMode = mFitMode;
     }
