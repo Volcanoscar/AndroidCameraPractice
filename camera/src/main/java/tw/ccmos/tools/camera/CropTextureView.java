@@ -20,9 +20,6 @@ public class CropTextureView extends TextureView {
     private int mPreviewHeight;
     private FitMode mFitMode;
 
-    private String videoDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).getAbsolutePath();
-    private String videoPath = videoDir + "/" + String.format("%d.mp4", new Date().getTime());
-
     public CropTextureView(Context context) {
         super(context);
     }
@@ -119,9 +116,5 @@ public class CropTextureView extends TextureView {
 
     public int getViewHeight() {
         return mViewHeight;
-    }
-
-    public void setVideoPath(String videoPath) {
-        this.videoPath = videoPath;
     }
 }

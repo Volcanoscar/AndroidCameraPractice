@@ -9,7 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity">
 
-    <tw.ccmos.tools.camera.RecorderTextureView
+    <tw.ccmos.tools.camera.CameraTextureView
         android:id="@+id/preview"
         android:layout_width="match_parent"
         android:layout_height="100dp" />

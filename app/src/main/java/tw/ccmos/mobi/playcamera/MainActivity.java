@@ -1,26 +1,18 @@
 package tw.ccmos.mobi.playcamera;
 
-import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.media.MediaRecorder;
-import android.os.Environment;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Surface;
-import android.view.TextureView;
 import android.view.View;
 
-import java.io.IOException;
-import java.util.List;
-
-import tw.ccmos.tools.camera.CropTextureView;
 import tw.ccmos.tools.camera.FitMode;
-import tw.ccmos.tools.camera.RecorderTextureView;
+import tw.ccmos.tools.camera.CameraTextureView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    RecorderTextureView preview;
+    CameraTextureView preview;
     Camera mCamera;
     Camera.Size mPreviewSize;
     boolean mRecording;
@@ -32,31 +24,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        preview = (RecorderTextureView) findViewById(R.id.preview);
+        preview = (CameraTextureView) findViewById(R.id.preview);
         preview.setFitMode(FitMode.WIDTH);
         preview.setAspectRatio(16, 9);
 
         findViewById(R.id.startButton).setOnClickListener(this);
         findViewById(R.id.stopButton).setOnClickListener(this);
-
-        mCamera = Camera.open();
-        preview.setCamera(mCamera, RecorderTextureView.CameraOrientation.PORTRAIT);
     }
 
     @Override
     public void onClick(View v) {
         int id = v.getId();
 
-        switch (id) {
-            case R.id.startButton:
-                break;
-            case R.id.stopButton:
-                break;
-        }
+        if (id == R.id.startButton)
+            preview.startRecord();
+        else
+            preview.stopRecord();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+
+        preview.stopRecord();
+        preview.stopPreview();
+
+        mCamera.release();
+        mCamera = null;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(mCamera == null) mCamera = Camera.open();
+
+        preview.setCamera(mCamera, CameraTextureView.CameraOrientation.PORTRAIT);
+        preview.startPreview();
     }
 }
