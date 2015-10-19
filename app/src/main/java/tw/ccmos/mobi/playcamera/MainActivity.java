@@ -56,6 +56,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         preview.stopRecord();
         preview.stopPreview();
 
+        player.stop();
+        player.releasePlayer();
+
         mCamera.release();
         mCamera = null;
     }
@@ -73,5 +76,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void playVideo() {
         player.setPreviewSize(preview.getPreviewWidth(), preview.getPreviewHeight());
         player.setVideoPathAndPlay(preview.getVideoPath());
+        player.setVolume(0);
     }
 }

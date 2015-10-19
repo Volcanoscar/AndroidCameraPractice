@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.Surface;
 import android.view.TextureView;
 
+import org.jdeferred.android.AndroidDeferredManager;
+
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
@@ -99,7 +101,7 @@ public class CameraTextureView extends CropTextureView implements TextureView.Su
      */
     public void startPreview() {
         //非同步啟動預覽
-        new Handler().post(new Runnable() {
+        new AndroidDeferredManager().when(new Runnable() {
             @Override
             public void run() {
                 mCamera.startPreview();
@@ -121,7 +123,7 @@ public class CameraTextureView extends CropTextureView implements TextureView.Su
         if (!isRecording) {
             isRecording = true;
 
-            new Handler().post(new Runnable() {
+            new AndroidDeferredManager().when(new Runnable() {
                 @Override
                 public void run() {
                     //進行拍攝設定
@@ -198,12 +200,12 @@ public class CameraTextureView extends CropTextureView implements TextureView.Su
 
         //設定
         //自動對焦
-        if (supportedFocusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO))
-            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-        else if (supportedFocusModes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE))
+        if (supportedFocusModes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE))
             parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
         else if (supportedFocusModes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO))
             parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
+        else if (supportedFocusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO))
+            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
 
         //預覽尺寸
         if (mPreviewSize != null)

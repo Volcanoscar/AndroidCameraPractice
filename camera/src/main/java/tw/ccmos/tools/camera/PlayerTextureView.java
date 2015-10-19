@@ -17,6 +17,7 @@ public class PlayerTextureView extends CropTextureView implements TextureView.Su
     MediaPlayer mMediaPlayer;
     Surface mSurface;
     boolean mRepeat = true;
+    boolean mPlaying = false;
 
     public PlayerTextureView(Context context) {
         super(context);
@@ -65,10 +66,13 @@ public class PlayerTextureView extends CropTextureView implements TextureView.Su
         return true;
     }
 
-    private void releasePlayer() {
-        mMediaPlayer.reset();
-        mMediaPlayer.release();
-        mMediaPlayer = null;
+    public void releasePlayer() {
+        if(mMediaPlayer != null) {
+            mMediaPlayer.stop();
+            mMediaPlayer.reset();
+            mMediaPlayer.release();
+            mMediaPlayer = null;
+        }
     }
 
     /**
@@ -81,8 +85,8 @@ public class PlayerTextureView extends CropTextureView implements TextureView.Su
         }
     }
 
-    private void play() {
-        if (mMediaPlayer != null)
+    public void play() {
+        if (mMediaPlayer != null && !mPlaying)
             mMediaPlayer.start();
     }
 
@@ -90,7 +94,7 @@ public class PlayerTextureView extends CropTextureView implements TextureView.Su
      * 停止播放
      */
     public void stop() {
-        if (mMediaPlayer != null)
+        if (mMediaPlayer != null && mPlaying)
             mMediaPlayer.stop();
     }
 
@@ -100,6 +104,20 @@ public class PlayerTextureView extends CropTextureView implements TextureView.Su
      */
     public void setRepeat(boolean repeat) {
         this.mRepeat = repeat;
+
+        if(repeat && !mPlaying) {
+            play();
+        }
+    }
+
+    /**
+     * 設定音量
+     * @param volume
+     */
+    public void setVolume(float volume) {
+        if(mMediaPlayer != null) {
+            mMediaPlayer.setVolume(volume, volume);
+        }
     }
 
     @Override
